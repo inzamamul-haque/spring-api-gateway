@@ -1,0 +1,26 @@
+server:
+  port: 8082
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: spring-api-gateway
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      routes:
+        - id: 1
+          uri: lb://MICROSERVICE-1
+          predicates:
+            - Path=/api/v1/**
+        - id: 2
+          uri: lb://MICROSERVICE-2
+          predicates:
+            - Path=/api/v2/**
